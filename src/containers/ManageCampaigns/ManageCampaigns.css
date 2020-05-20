@@ -90,9 +90,13 @@
 .listcontainer .campaign figure {
     display: inline-block;
     vertical-align: top;
-    margin: 0 15px 0 0;
-    width: 75px;
-    height: 75px;
+    margin: 0 0 0 0;
+    width: 55px;
+    height: 55px;
+}
+
+.listcontainer .campaign div {
+    float: right
 }
 
 .listcontainer .campaign figure img {

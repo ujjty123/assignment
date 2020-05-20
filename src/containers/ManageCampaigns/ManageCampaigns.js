@@ -31,7 +31,7 @@ const manageCampaigns = (props) => {
                                 <div  className={classes.campaign}>
                                     <figure><img src={campgainIcon1} alt=""/></figure>
                                     <div>
-                                        <h6>Auto Chess</h6>
+                                        <h5>Auto Chess</h5>
                                         <i>US</i>
                                     </div>
                                 </div>
