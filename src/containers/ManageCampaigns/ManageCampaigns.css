@@ -11,10 +11,14 @@
     background-color: #f1f1f4;
 }
 
+.listcontainer table {
+    border-spacing: 0px;
+}
+
 .listcontainer th {
-    font-weight: 700;
+    /* font-weight: 700; */
     text-transform: uppercase;
-    font-size: 18px;
+    /* font-size: 18px; */
     padding: 10px 20px;
     background-color: #f1f1f4;
     border: none;
@@ -41,12 +45,13 @@
 
 .listcontainer .action .actioncell img {
     margin-right: 10px;
+    height: 20px;
 }
 
 .listcontainer .action .actioncell span {
     color: #aab4c6;
-    font-weight: 400;
-    font-size: 16px;
+    /* font-weight: 400;
+    font-size: 16px; */
     text-transform: capitalize;
 }
 
@@ -58,26 +63,27 @@
 
 .listcontainer .viewsection img {
     margin-right: 10px;
+    height: 20px;
 }
 
 .listcontainer .viewsection span {
     color: #aab4c6;
-    font-weight: 400;
-    font-size: 16px;
+    /* font-weight: 400;
+    font-size: 16px; */
     text-transform: capitalize;
 }
 
 .listcontainer .date h5 {
     margin: 0 0 10px;
-    font-weight: 700;
-    font-size: 18px;
+    /* font-weight: 700;
+    font-size: 18px; */
     color: #aab4c6;
 }
 
 .listcontainer .date i {
     font-style: italic;
-    font-size: 14px;
-    font-weight: 400;
+    /* font-size: 14px;
+    font-weight: 400; */
     color: #aab4c6;
 }
 
@@ -101,15 +107,15 @@
 }
 
 .listcontainer .campaign .campaigninfo h6 {
-    font-weight: 700;
-    font-size: 20px;
+    /* font-weight: 700;
+    font-size: 20px; */
     color: #aab4c6;
     margin: 0 0 10px;
 }
 
 .listcontainer .campaign .campaigninfo i {
     font-style: italic;
-    font-size: 14px;
-    font-weight: 400;
+    /* font-size: 14px;
+    font-weight: 400; */
     color: #aab4c6;
 }

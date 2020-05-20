@@ -6,6 +6,7 @@ import viewprice from '../../assets/images/Price.png';
 import csv from '../../assets/images/file.png';
 import report from '../../assets/images/statistics-report.png';
 import schedule from '../../assets/images/calendar.png';
+
 const manageCampaigns = (props) => {
     return(
         <div>
