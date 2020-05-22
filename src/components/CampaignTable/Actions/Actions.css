@@ -32,3 +32,8 @@
     text-transform: capitalize;
     margin-right: 50px;
 }
+
+.action input {
+    border:none !important;
+    outline: none !important;
+}

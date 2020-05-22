@@ -5,9 +5,33 @@ import Campaign from './Campaign/Campaign';
 import Pricing from './Pricing/Pricing';
 import Actions from './Actions/Actions';
 
-const campaignTable = (props) => {
+const CampaignTable = (props) => {
+    let tableData = [...props.tableData];
+    const renderData = tableData.map((item) => {
+        return <tr key={item.id}>
+            <td>
+                <Date days={item.days} />
+            </td>
+            <td>
+                <Campaign
+                    logo={item.image}
+                    name={item.name}
+                    region={item.region} />
+            </td>
+            <td>
+                <Pricing price={item.price} onPurchase={() => props.onPurchase({
+                    image: item.image,
+                    name: item.name,
+                    price: item.price
+                })} />
+            </td>
+            <td>
+                <Actions id={item.id} onSchedule={(date) => props.onSchedule(date, item.id)} />
+            </td>
+        </tr>
+    })
     return (
-        <div className={classes.listcontainer}>
+        (props.tableData.length > 0) ? <div className={classes.listcontainer}>
             <table>
                 <thead>
                     <tr>
@@ -18,25 +42,11 @@ const campaignTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <Date />
-                        </td>
-                        <td>
-                            <Campaign />
-                        </td>
-                        <td>
-                            <Pricing />
-                        </td>
-                        <td>
-                            <Actions />
-                        </td>
-                    </tr>
-
+                    {renderData}
                 </tbody>
             </table>
-        </div>
+        </div> : <h1>No data found</h1>
     );
 }
 
-export default campaignTable;
+export default CampaignTable;

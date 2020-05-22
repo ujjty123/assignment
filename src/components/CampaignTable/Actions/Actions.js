@@ -3,6 +3,9 @@ import csv from '../../../assets/images/file.png';
 import report from '../../../assets/images/statistics-report.png';
 import schedule from '../../../assets/images/calendar.png';
 import classes from './Actions.css';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 const actions = (props) => {
     return (
@@ -17,7 +20,7 @@ const actions = (props) => {
             </div>
             <div className={classes.margin}>
                 <img className={classes.icon} src={schedule} alt="" />
-                <span >Schedule Again</span>
+                <DatePicker placeholderText="Schedule Again" onChange={date => props.onSchedule(date)}/>;
             </div>
         </div>
     )

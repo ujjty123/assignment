@@ -2,13 +2,21 @@ import React from 'react';
 
 import classes from './NavigationItems.css';
 import NavigationItem from './NavigationItem/NavigationItem';
+import LangContext from '../../../context/LangContext';
 
-const navigationItems = () => (
-    <ul className={classes.NavigationItems}>
-        <NavigationItem link="#" active>Upcoming Campaigns</NavigationItem>
-        <NavigationItem link="#">Live Campaigns</NavigationItem>
-        <NavigationItem link="#">Past Campaigns</NavigationItem>
-    </ul>
+const NavigationItems = () => (
+    <LangContext.Consumer>
+        {(value) => (
+            <React.Fragment>
+                <ul className={classes.NavigationItems}>
+                    <NavigationItem link="/upcoming">{value.tabs.tab1}</NavigationItem>
+                    <NavigationItem link="/live">{value.tabs.tab2}</NavigationItem>
+                    <NavigationItem link="/past">{value.tabs.tab3}</NavigationItem>
+                </ul>
+            </React.Fragment>
+        )
+        }
+    </LangContext.Consumer>
 );
 
-export default navigationItems;
+export default NavigationItems;

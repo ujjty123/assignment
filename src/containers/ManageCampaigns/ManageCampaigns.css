@@ -2,3 +2,14 @@
     margin-bottom: 30px;
     border-bottom: 1px solid #8080803b;
 }
+
+
+.modalName{
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 11px;
+}
+
+.modalPricing {
+    font-size: 16px;
+}

@@ -1,16 +1,15 @@
 import React from 'react';
-import campgainIcon1 from '../../../assets/images/Bitmap.png';
 import classes from './Campaign.css';
 
 const campaign = (props) => {
     return (
         <div >
             <figure className={classes.figure}>
-                <img className={classes.image} src={campgainIcon1} alt="" />
+                <img className={classes.image} src={props.logo} alt="" />
             </figure>
             <div className={classes.info}>
-                <h5 className={classes.header}>Auto Chess</h5>
-                <i className={classes.icon}>US</i>
+                <h3 className={classes.header}>{props.name}</h3>
+                <i className={classes.icon}>{props.region}</i>
             </div>
         </div>
     )
