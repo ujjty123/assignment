@@ -9,16 +9,26 @@
     margin: 10px;
     font-weight: bold;
 }
-
+/* 
 .Button:first-of-type {
     margin-left: 0;
     padding-left: 0;
+} */
+
+.Save {
+    background: #57859a;
+    border-radius: 5px;
+    font-size: 12px;
 }
 
-.Success {
-    color: #5C9210;
+.Cancel {
+    background: #d4623e;
+    border-radius: 5px;
+    font-size: 12px;
 }
 
-.Danger {
-    color: #944317;
+.AddLocation {
+    background: #58859a;
+    border-radius: 25px;
+    font-size: 12px;
 }
