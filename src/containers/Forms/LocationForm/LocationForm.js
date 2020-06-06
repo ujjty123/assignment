@@ -6,7 +6,8 @@ import classes from './LocationForm.css';
 import Button from '../../../components/UI/Button/Button';
 
 export default function LocationForm(props) {
-    let initialState = {
+    // initial input values
+    let initialInputState = {
         locationName:'',
         address1:'',
         address2:'',
@@ -17,21 +18,56 @@ export default function LocationForm(props) {
         phone:'',
         timezone:''
     };
-    const [input, setInput] = useState({...initialState});
+
+    // initial validation configuration
+    let initialErrorState = {
+        locationName: false,
+        address1:false,
+        phone:false
+    }
     
+    // input and validation error states
+    const [input, setInput] = useState({...initialInputState});
+    const [error, setError] = useState({...initialErrorState});
+
+    //handling the input values change, maintaining an input object containg the form field values.
     const handleInputChange = (e) => {
-        console.log('handleInputChange');
+        let name = e.currentTarget.name;
+        // unset the error when user enter some value
+        if(e.currentTarget.value.length > 0){
+            setError(prevState => ({ ...prevState, [name]: false }));
+        }
         setInput({
             ...input,
-            [e.currentTarget.name]: e.currentTarget.value
+            [name]: e.currentTarget.value
         });
     };
+
+    //on cancel re-initialized the form and calling props function to close form modal.
     const onCancled = () => {
-        setInput({...initialState});
+        setInput(prevState => ({ ...prevState, ...initialInputState}));
         props.cancled();
     };
+
+    // Required fields validation logic
+    const validateForm = () => {
+        let doSave = true;
+        for (const key in error) {
+            if(input[key] === ''){
+                (function(key){
+                    setError(prevState => ({ ...prevState, [key]: true }));
+                })(key);
+                doSave = false;
+            }
+        }
+        return doSave;
+    }
+
+    // if form submit is valid pass input object to be saved.
     const onSave = () => {
-        console.log('input',input);
+        let isValid = validateForm();
+        if(isValid === true) props.save(input);
+        setInput(prevState => ({ ...prevState, ...initialInputState}));
     };
 
     return (
@@ -48,10 +84,10 @@ export default function LocationForm(props) {
                         label="Location Name"
                         InputLabelProps={{
                             shrink: true,
-                            error:true
+                            error:error.locationName
                         }}
                         InputProps={{
-                            error:true,
+                            error:error.locationName,
                             value: input.locationName,
                             onChange: handleInputChange
                         }}
@@ -67,10 +103,10 @@ export default function LocationForm(props) {
                         fullWidth
                         InputLabelProps={{
                             shrink: true,
-                            error:true
+                            error:error.address1
                         }}
                         InputProps={{
-                            error:true,
+                            error:error.address1,
                             value: input.address1,
                             onChange: handleInputChange
                         }}
@@ -148,16 +184,17 @@ export default function LocationForm(props) {
                 </Grid>
                 <Grid item xs={12} sm={3}>
                     <TextField
+                        required
                         id="phone"
                         name="phone"
                         label="contact"
                         fullWidth
                         InputLabelProps={{
                             shrink: true,
-                            error:true
+                            error:error.phone
                         }}
                         InputProps={{
-                            error:true,
+                            error:error.phone,
                             value: input.phone,
                             onChange: handleInputChange
                         }}
