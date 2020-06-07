@@ -1,0 +1,8 @@
+.Table{
+    padding: 0 20px;
+}
+
+.Table > div> div:nth-child(2)> div > div > div{
+    max-height: 400px;
+    overflow: auto;
+}

@@ -8,6 +8,7 @@
     padding: 10px;
     margin: 10px;
     font-weight: bold;
+    z-index: 99;
 }
 /* 
 .Button:first-of-type {
@@ -29,6 +30,7 @@
 
 .AddLocation {
     background: #58859a;
-    border-radius: 25px;
+    border-radius: 5px;
     font-size: 12px;
+    margin: 10px;
 }

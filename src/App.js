@@ -4,10 +4,11 @@ import Header from './components/UI/Header/Header';
 import Modal from './components/UI/Modal/Modal';
 import ManageLocations from './containers/ManageLocations/ManageLocations';
 import LocationForm from './containers/Forms/LocationForm/LocationForm';
+import FacilityTimeForm from './containers/Forms/FacilityTimeForm/FacilityTimeForm';
 import { useIndexedDB } from 'react-indexed-db';
 import { DBConfig } from './DBConfig.js';
 import { initDB } from 'react-indexed-db';
- 
+
 initDB(DBConfig);
 
 const App = () => {
@@ -18,7 +19,9 @@ const App = () => {
 
   const { add } = useIndexedDB('locations');
   const { getAll } = useIndexedDB('locations');
-  
+  const { deleteRecord } = useIndexedDB('locations');
+  const { update } = useIndexedDB('locations');
+
   useEffect(() => {
     getAll().then(locationsFromDB => {
       setLocations(locationsFromDB);
@@ -28,25 +31,48 @@ const App = () => {
   const addLocationClickHandler = useCallback(() => {
     setAddLocationModal(true);
   }, []);
+
   const onAddLocationClosed = useCallback(() => {
     setAddLocationModal(false);
   }, []);
+
   const onFacilityTimeClosed = useCallback(() => {
     setFacilityTimeModal(false);
+  }, []);
+
+  const onFacilityTimeFocus = useCallback(() => {
+    setFacilityTimeModal(true);
   }, []);
 
   const onLocationSave = useCallback((data) => {
     console.log('location save: ', data);
     add(data).then(
       event => {
-        // console.log('ID Generated: ', event.target.result);
         setAddLocationModal(false);
+        getAll().then(locationsFromDB => {
+          setLocations(locationsFromDB);
+        });
       },
       error => {
         alert('error please try again');
       }
     );
-  }, [add]);
+  }, [add, getAll]);
+
+  const onLocationDelete = useCallback((data) => {
+    deleteRecord(data.id).then(event => {
+      getAll().then(locationsFromDB => {
+        setLocations(locationsFromDB);
+      });
+    });
+  }, [deleteRecord, getAll]);
+
+  const onLocationUpdate = useCallback((data) => {
+    delete data.tableData;
+    update(data).then(event => {
+      console.log('Edited!');
+    });
+  }, [update]);
 
   return (
     <div style={{
@@ -56,16 +82,26 @@ const App = () => {
     }}>
       <Layout>
         <Modal
-          show={showAddLocationModal}>
-          <LocationForm save={onLocationSave} cancled={onAddLocationClosed}/>
+          show={showAddLocationModal}
+          form ="Location">
+          <LocationForm
+            save={onLocationSave}
+            cancled={onAddLocationClosed}
+            facilityFocus={onFacilityTimeFocus} />
         </Modal>
         <Modal
           show={showFacilityTimeModal}
-          modalClosed={onFacilityTimeClosed}>
-          Facility
+          form ="Facility">
+          <FacilityTimeForm
+            cancled={onFacilityTimeClosed}
+          />
         </Modal>
         <Header clicked={addLocationClickHandler} />
-        <ManageLocations locations={locations}/>
+        <ManageLocations
+          locations={locations}
+          deleteLocation={onLocationDelete}
+          updateLocation={onLocationUpdate}
+        />
       </Layout>
     </div>
   );

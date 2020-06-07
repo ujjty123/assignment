@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     position: fixed;
-    z-index: 100;
+    /* z-index: 100; */
     left: 0;
     top: 56px;
     background-color:#f2f2f2;
@@ -12,8 +12,16 @@
     width: 100%;
     height: 56px;
     position: fixed;
-    z-index: 100;
+    /* z-index: 100; */
     left: 0;
     top: 0;
     background-color:transparent;
+}
+
+.Location {
+    z-index: 100;
+}
+
+.Facility {
+    z-index: 700;
 }

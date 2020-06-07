@@ -12,9 +12,9 @@ class Modal extends Component {
     render () {
         return (
             <React.Fragment>
-                <Backdrop show={this.props.show}/>
+                <Backdrop show={this.props.show} form={this.props.form}/>
                 <div
-                    className={classes.Modal}
+                    className={[classes.Modal, classes[this.props.form]].join(' ')}
                     style={{
                         transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                         opacity: this.props.show ? '1' : '0'

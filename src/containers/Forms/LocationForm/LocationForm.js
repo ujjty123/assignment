@@ -66,8 +66,10 @@ export default function LocationForm(props) {
     // if form submit is valid pass input object to be saved.
     const onSave = () => {
         let isValid = validateForm();
-        if(isValid === true) props.save(input);
-        setInput(prevState => ({ ...prevState, ...initialInputState}));
+        if(isValid === true){
+            props.save(input);
+            setInput(prevState => ({ ...prevState, ...initialInputState}));
+        }
     };
 
     return (
@@ -75,7 +77,7 @@ export default function LocationForm(props) {
             <Typography variant="h6" gutterBottom>
                 Add Locations
             </Typography>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -221,7 +223,9 @@ export default function LocationForm(props) {
                         id="facilitytime"
                         name="facilitytime"
                         label="FacilityTimes"
+                       
                         InputProps={{
+                            onFocus: props.facilityFocus,
                             readOnly: true,
                         }}
                         fullWidth
