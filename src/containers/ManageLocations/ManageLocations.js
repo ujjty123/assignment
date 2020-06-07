@@ -5,10 +5,15 @@ import LocationList from './LocationList/LocationList';
 
 
 const ManageCampaigns = (props) => {
-    console.log('locations list-->',props.locations);
-    return (props.locations.length > 0) ? <LocationList list={props.locations} onDelete={props.deleteLocation} onEdit={props.updateLocation}/>: <div className={classes.NoLocation}>
-        <NoLocation />
-    </div>
+    console.log('locations list-->', props.locations);
+    return (
+        (props.locations.length > 0) ?
+            <LocationList
+                list={props.locations} onDelete={props.deleteLocation}
+                onEdit={props.updateLocation} />
+            : <div className={classes.NoLocation}>
+                <NoLocation />
+            </div>)
 };
 
 export default ManageCampaigns;

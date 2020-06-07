@@ -1,12 +1,11 @@
-import React, { useState, useRef } from 'react';
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import classes from './FacilityTimeForm.css';
 import Button from '../../../components/UI/Button/Button';
+import FacilityTimeItem from './FacilityTimeItem/FacilityTimeItem';
+
 
 export default function FacilityTimeForm(props) {
-
     //on cancel re-initialized the form and calling props function to close form modal.
     const onCancled = () => {
         props.cancled();
@@ -22,9 +21,7 @@ export default function FacilityTimeForm(props) {
             <Typography variant="h6" gutterBottom>
                 Facility Times
             </Typography>
-            <Grid container spacing={2}>
-             
-            </Grid>
+            <FacilityTimeItem/>
             <div className={classes.Buttons}>
                 <Button
                     btnType="Cancel"
