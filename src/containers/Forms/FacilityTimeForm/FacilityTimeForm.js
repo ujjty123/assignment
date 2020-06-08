@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import classes from './FacilityTimeForm.css';
 import Button from '../../../components/UI/Button/Button';
@@ -16,12 +16,89 @@ export default function FacilityTimeForm(props) {
         // props.save();
     };
 
+    const facilityTimeArr = [
+        {
+            day:'Sun',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Mon',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Tue',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Wed',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Thu',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Fri',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        },
+        {
+            day:'Sat',
+            checked: false,
+            input:{
+                fromTime: '10:30',
+                toTime: '06:30',
+            },
+            fromMidday: 'AM',
+            toMidday: 'PM'
+        }
+    ]
+
+    const [facilityTime, setFacilityTime] = useState(facilityTimeArr);
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
                 Facility Times
             </Typography>
-            <FacilityTimeItem/>
+            {facilityTime.map((item)=>{
+                return <FacilityTimeItem key={item.day} time={{...item}}/>
+            })}
             <div className={classes.Buttons}>
                 <Button
                     btnType="Cancel"

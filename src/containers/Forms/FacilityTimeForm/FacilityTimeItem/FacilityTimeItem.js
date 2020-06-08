@@ -20,24 +20,42 @@ const useStyles = makeStyles((theme) => ({
 
 const FacilityTimeItem = (props) => {
     const classesMUI = useStyles();
+    let initialState = {...props.time}
+    const [checked, setChecked] = React.useState(initialState.checked);
+    const [input, setInput] = React.useState({...initialState.input});
+
+    const handleInputChange = (e) => {
+        let name = e.currentTarget.name;
+        setInput({
+            ...input,
+            [name]: e.currentTarget.value
+        });
+    };
+
     return(
         <div className={classes.Outer}>
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        // checked={state.checkedB}
-                        // onChange={handleChange}
-                        name="checkedB"
-                        color="primary"
+                <div style={{
+                    width:'80px'
+                }}>
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={checked}
+                            // onChange={handleCheckChange}
+                            name="checked"
+                            color="primary"
+                        />
+                        }
+                        label={props.time.day}
                     />
-                    }
-                    label="Sun"
-                />
+                </div>
                 <TextField
                     className = {classesMUI.time}
                     id="fromtime"
+                    name="fromTime"
                     label="From"
                     InputLabelProps={{
+                        value: input.fromTime,
                         shrink: true,
                     }}
                     variant="outlined"
@@ -52,7 +70,9 @@ const FacilityTimeItem = (props) => {
                     className = {classesMUI.time}
                     id="totime"
                     label="To"
+                    name="toTime"
                     InputLabelProps={{
+                        value: input.toTime,
                         shrink: true,
                     }}
                     variant="outlined"
