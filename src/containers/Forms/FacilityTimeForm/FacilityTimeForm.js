@@ -91,13 +91,38 @@ export default function FacilityTimeForm(props) {
 
     const [facilityTime, setFacilityTime] = useState(facilityTimeArr);
 
+    const handeChecked = (index, value) => {
+        setFacilityTime(prevState => {  
+            prevState[index].checked = value;
+            return prevState;
+        });
+    }
+
+    const onApplyToAll = (data) => {
+        setFacilityTime(prevState => {  
+            let stateTemp = prevState.map((item)=>{
+                if(item.checked === true){
+                    item.input = {...item.input,...data}
+                }
+                return item;
+            })
+            console.log('apply all-->',stateTemp);
+            return stateTemp;
+        });
+    }
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
                 Facility Times
             </Typography>
-            {facilityTime.map((item)=>{
-                return <FacilityTimeItem key={item.day} time={{...item}}/>
+            {facilityTime.map((item,index)=>{
+                return <FacilityTimeItem 
+                    key={item.day} 
+                    idx={index} 
+                    time={{...item}} 
+                    onChecked={handeChecked}
+                    applyToAll={onApplyToAll}/>
             })}
             <div className={classes.Buttons}>
                 <Button

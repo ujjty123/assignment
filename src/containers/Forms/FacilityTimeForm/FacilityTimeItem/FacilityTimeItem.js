@@ -20,17 +20,55 @@ const useStyles = makeStyles((theme) => ({
 
 const FacilityTimeItem = (props) => {
     const classesMUI = useStyles();
-    let initialState = {...props.time}
+    let initialState = {...props.time};
+    let initialErrorState = {
+        fromTime: false,
+        toTime:false
+    };
     const [checked, setChecked] = React.useState(initialState.checked);
     const [input, setInput] = React.useState({...initialState.input});
+    const [error, setError] = React.useState({...initialErrorState});
 
     const handleInputChange = (e) => {
         let name = e.currentTarget.name;
+        let value = e.currentTarget.value;
+        if(value.length > 5){
+            return;
+        }
+
+        let regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/gm;
+        let match = value.search(regex);
+        
+        if(match === -1){
+            setError(prevState => ({ ...prevState, [name]: true }));
+        } else if(match === 0){
+            setError(prevState => ({ ...prevState, [name]: false }));
+            let hour = ((parseInt(value.split(':')[0]) % 12) || 12).toString();
+            if(hour.length == 1) hour = `0${hour}`;
+            value = hour +':'+ value.split(':')[1];
+        } 
         setInput({
             ...input,
-            [name]: e.currentTarget.value
+            [name]: value
         });
     };
+
+
+    React.useEffect(() => {
+        setInput((prevState) => {
+          const data = {...props.time.input};
+          return data;
+        });
+      }, [props.time.input]);
+
+
+    const handleCheckChange = (event) => {
+        setChecked(event.target.checked);
+        props.onChecked(props.idx,event.target.checked);
+    };
+    const handleApplyToAll = () => {
+        props.applyToAll(input);
+    }
 
     return(
         <div className={classes.Outer}>
@@ -41,7 +79,7 @@ const FacilityTimeItem = (props) => {
                         control={
                         <Checkbox
                             checked={checked}
-                            // onChange={handleCheckChange}
+                            onChange={handleCheckChange}
                             name="checked"
                             color="primary"
                         />
@@ -55,8 +93,13 @@ const FacilityTimeItem = (props) => {
                     name="fromTime"
                     label="From"
                     InputLabelProps={{
-                        value: input.fromTime,
                         shrink: true,
+                        error:error.fromTime
+                    }}
+                    InputProps={{
+                        error:error.fromTime,
+                        value: input.fromTime,
+                        onChange: handleInputChange,
                     }}
                     variant="outlined"
                 />
@@ -72,8 +115,12 @@ const FacilityTimeItem = (props) => {
                     label="To"
                     name="toTime"
                     InputLabelProps={{
-                        value: input.toTime,
                         shrink: true,
+                        error:error.toTime
+                    }}
+                    InputProps={{
+                        value: input.toTime,
+                        onChange: handleInputChange,
                     }}
                     variant="outlined"
                 />
@@ -85,6 +132,7 @@ const FacilityTimeItem = (props) => {
                 >PM</Button>
                 <Button
                     btnType="Apply"
+                    clicked={handleApplyToAll}
                 >Apply to All checked</Button>
             </div>
     );
