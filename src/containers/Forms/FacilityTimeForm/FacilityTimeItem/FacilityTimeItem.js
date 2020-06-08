@@ -28,6 +28,10 @@ const FacilityTimeItem = (props) => {
     const [checked, setChecked] = React.useState(initialState.checked);
     const [input, setInput] = React.useState({...initialState.input});
     const [error, setError] = React.useState({...initialErrorState});
+    const [fromMiddayAM, setFromMiddayAM] = React.useState(initialState.fromMidday.AM);
+    const [fromMiddayPM, setFromMiddayPM] = React.useState(initialState.fromMidday.PM);
+    const [toMiddayAM, setToMiddayAM] = React.useState(initialState.toMidday.AM);
+    const [toMiddayPM, setToMiddayPM] = React.useState(initialState.toMidday.PM);
 
     const handleInputChange = (e) => {
         let name = e.currentTarget.name;
@@ -44,7 +48,7 @@ const FacilityTimeItem = (props) => {
         } else if(match === 0){
             setError(prevState => ({ ...prevState, [name]: false }));
             let hour = ((parseInt(value.split(':')[0]) % 12) || 12).toString();
-            if(hour.length == 1) hour = `0${hour}`;
+            if(hour.length === 1) hour = `0${hour}`;
             value = hour +':'+ value.split(':')[1];
         } 
         setInput({
@@ -59,7 +63,12 @@ const FacilityTimeItem = (props) => {
           const data = {...props.time.input};
           return data;
         });
-      }, [props.time.input]);
+        setChecked(props.time.checked);
+        setFromMiddayAM(props.time.fromMidday.AM);
+        setFromMiddayPM(props.time.fromMidday.PM);
+        setToMiddayAM(props.time.toMidday.AM);
+        setToMiddayPM(props.time.toMidday.PM);
+      }, [props.time.checked,props.time.input,props.time.fromMidday.AM,props.time.fromMidday.PM, props.time.toMidday.AM,props.time.toMidday.PM]);
 
 
     const handleCheckChange = (event) => {
@@ -67,8 +76,35 @@ const FacilityTimeItem = (props) => {
         props.onChecked(props.idx,event.target.checked);
     };
     const handleApplyToAll = () => {
-        props.applyToAll(input);
+        props.applyToAll(input,{
+            fromMiddayAM:fromMiddayAM,
+            fromMiddayPM:fromMiddayPM,
+            toMiddayAM:toMiddayAM,
+            toMiddayPM:toMiddayPM
+        });
+    };
+
+    const fromAMClickHandler = () => {
+        setFromMiddayAM("AMActive");
+        setFromMiddayPM('PMInactive');
+    };
+
+    const fromPMClickHandler = () => {
+        setFromMiddayAM("AMInactive");
+        setFromMiddayPM('PMActive');
+    };
+
+    const toAMClickHandler = () => {
+        setToMiddayAM("AMActive");
+        setToMiddayPM('PMInactive');
+    };
+
+    const toPMClickHandler = () => {
+        setToMiddayAM("AMInactive");
+        setToMiddayPM('PMActive');
     }
+
+
 
     return(
         <div className={classes.Outer}>
@@ -87,49 +123,62 @@ const FacilityTimeItem = (props) => {
                         label={props.time.day}
                     />
                 </div>
-                <TextField
-                    className = {classesMUI.time}
-                    id="fromtime"
-                    name="fromTime"
-                    label="From"
-                    InputLabelProps={{
-                        shrink: true,
-                        error:error.fromTime
-                    }}
-                    InputProps={{
-                        error:error.fromTime,
-                        value: input.fromTime,
-                        onChange: handleInputChange,
-                    }}
-                    variant="outlined"
-                />
-                <Button
-                    btnType="AM"
-                >AM</Button>
-                <Button
-                    btnType="PM"
-                >PM</Button>
-                <TextField
-                    className = {classesMUI.time}
-                    id="totime"
-                    label="To"
-                    name="toTime"
-                    InputLabelProps={{
-                        shrink: true,
-                        error:error.toTime
-                    }}
-                    InputProps={{
-                        value: input.toTime,
-                        onChange: handleInputChange,
-                    }}
-                    variant="outlined"
-                />
-                <Button
-                    btnType="AM"
-                >AM</Button>
-                <Button
-                    btnType="PM"
-                >PM</Button>
+                <div>
+                    <TextField
+                        className = {classesMUI.time}
+                        id="fromtime"
+                        name="fromTime"
+                        label="From"
+                        InputLabelProps={{
+                            shrink: true,
+                            error:error.fromTime
+                        }}
+                        InputProps={{
+                            error:error.fromTime,
+                            value: input.fromTime,
+                            onChange: handleInputChange,
+                        }}
+                        variant="outlined"
+                    />
+                </div>
+                <div>
+                    <Button
+                        btnType={fromMiddayAM}
+                        clicked={fromAMClickHandler}
+                    >AM</Button>
+                    <Button
+                        btnType={fromMiddayPM}
+                        clicked={fromPMClickHandler}
+                    >PM</Button>
+                </div>
+                <div>
+                    <TextField
+                        className = {classesMUI.time}
+                        id="totime"
+                        label="To"
+                        name="toTime"
+                        InputLabelProps={{
+                            shrink: true,
+                            error:error.toTime
+                        }}
+                        InputProps={{
+                            value: input.toTime,
+                            onChange: handleInputChange,
+                        }}
+                        variant="outlined"
+                    />
+                </div>
+                <div>
+                    <Button
+                        btnType={toMiddayAM}
+                        clicked={toAMClickHandler}
+                    >AM</Button>
+                    <Button
+                        btnType={toMiddayPM}
+                        clicked={toPMClickHandler}
+                    >PM</Button>
+                </div>
+                
                 <Button
                     btnType="Apply"
                     clicked={handleApplyToAll}

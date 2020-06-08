@@ -37,6 +37,13 @@ export default function LocationForm(props) {
         if(e.currentTarget.value.length > 0){
             setError(prevState => ({ ...prevState, [name]: false }));
         }
+        if(name === 'phone'){
+            let regex = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/gm;
+            let match = e.currentTarget.value.search(regex);
+            if(match === -1){
+                setError(prevState => ({ ...prevState, [name]: true }));
+            }
+        }
         setInput({
             ...input,
             [name]: e.currentTarget.value
@@ -58,6 +65,14 @@ export default function LocationForm(props) {
                     setError(prevState => ({ ...prevState, [key]: true }));
                 })(key);
                 doSave = false;
+            }
+            if(key === 'phone' && input[key].length > 0){
+                let regex = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/gm;
+                let match = input[key].search(regex);
+                if(match === -1){
+                    setError(prevState => ({ ...prevState, [key]: true }));
+                    doSave = false;
+                }
             }
         }
         return doSave;
@@ -190,6 +205,7 @@ export default function LocationForm(props) {
                         id="phone"
                         name="phone"
                         label="contact"
+                        helperText="US Format"
                         fullWidth
                         InputLabelProps={{
                             shrink: true,
@@ -223,7 +239,7 @@ export default function LocationForm(props) {
                         id="facilitytime"
                         name="facilitytime"
                         label="FacilityTimes"
-                       
+                        helperText="Click this to open Facility Timing Form"
                         InputProps={{
                             onFocus: props.facilityFocus,
                             readOnly: true,

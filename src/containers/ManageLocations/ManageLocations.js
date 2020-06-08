@@ -5,7 +5,6 @@ import LocationList from './LocationList/LocationList';
 
 
 const ManageCampaigns = (props) => {
-    console.log('locations list-->', props.locations);
     return (
         (props.locations.length > 0) ?
             <LocationList

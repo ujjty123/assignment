@@ -6,16 +6,6 @@ import FacilityTimeItem from './FacilityTimeItem/FacilityTimeItem';
 
 
 export default function FacilityTimeForm(props) {
-    //on cancel re-initialized the form and calling props function to close form modal.
-    const onCancled = () => {
-        props.cancled();
-    };
-
-    // if form submit is valid pass input object to be saved.
-    const onSave = () => {
-        // props.save();
-    };
-
     const facilityTimeArr = [
         {
             day:'Sun',
@@ -24,8 +14,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Mon',
@@ -34,8 +30,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Tue',
@@ -44,8 +46,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Wed',
@@ -54,8 +62,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Thu',
@@ -64,8 +78,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Fri',
@@ -74,8 +94,14 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         },
         {
             day:'Sat',
@@ -84,29 +110,49 @@ export default function FacilityTimeForm(props) {
                 fromTime: '10:30',
                 toTime: '06:30',
             },
-            fromMidday: 'AM',
-            toMidday: 'PM'
+            fromMidday: {
+                AM:'AMActive',
+                PM:'PMInactive'
+            },
+            toMidday: {
+                AM:'AMInactive',
+                PM:'PMActive'
+            }
         }
     ]
 
-    const [facilityTime, setFacilityTime] = useState(facilityTimeArr);
+    const [facilityTime, setFacilityTime] = useState([...facilityTimeArr]);
+
+    //on cancel re-initialized the form and calling props function to close form modal.
+    const onCancled = () => {
+        setFacilityTime([...facilityTimeArr]);
+        props.cancled();
+    };
+
+    // if form submit is valid pass input object to be saved.
+    // const onSave = () => {
+    //     props.cancled();
+    // };
 
     const handeChecked = (index, value) => {
         setFacilityTime(prevState => {  
             prevState[index].checked = value;
             return prevState;
         });
-    }
+    };
 
-    const onApplyToAll = (data) => {
+    const onApplyToAll = (data, midObj) => {
         setFacilityTime(prevState => {  
             let stateTemp = prevState.map((item)=>{
                 if(item.checked === true){
-                    item.input = {...item.input,...data}
+                    item.input = {...item.input,...data};
+                    item.fromMidday.AM = midObj.fromMiddayAM;
+                    item.fromMidday.PM = midObj.fromMiddayPM;
+                    item.toMidday.AM = midObj.toMiddayAM;
+                    item.toMidday.PM = midObj.toMiddayPM;
                 }
                 return item;
-            })
-            console.log('apply all-->',stateTemp);
+            });
             return stateTemp;
         });
     }
@@ -131,7 +177,7 @@ export default function FacilityTimeForm(props) {
                 >cancel</Button>
                 <Button
                     btnType="Save"
-                    clicked={onSave}
+                    clicked={onCancled}
                 >save</Button>
             </div>
         </React.Fragment>

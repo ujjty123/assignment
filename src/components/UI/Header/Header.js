@@ -4,7 +4,6 @@ import classes from './Header.css';
 
 
 const Header = ( props ) => {
-    console.log('header');
     return(
     <header className={classes.Toolbar}>
         <h2 className={classes.Heading}>Locations</h2>

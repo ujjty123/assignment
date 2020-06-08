@@ -82,7 +82,6 @@ export default function LocationList(props) {
                   setState((prevState) => {
                     const data = [...prevState.data];
                     data[data.indexOf(oldData)] = newData;
-                    console.log('on edit-->',newData);
                     props.onEdit(newData);
                     return { ...prevState, data };
                   });

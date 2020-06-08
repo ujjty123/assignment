@@ -45,7 +45,6 @@ const App = () => {
   }, []);
 
   const onLocationSave = useCallback((data) => {
-    console.log('location save: ', data);
     add(data).then(
       event => {
         setAddLocationModal(false);

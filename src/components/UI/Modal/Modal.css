@@ -25,3 +25,10 @@
         left: calc(50% - 250px);
     }
 }
+
+@media (max-width: 600px) {
+    .Modal {
+        max-height: 550px;
+        overflow: auto;
+    }
+}
